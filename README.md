@@ -65,6 +65,10 @@ customer_support_agent/
 └── README.md         # This file
 ```
 
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
 ## License
 
-MIT License
+MIT License - see LICENSE file for details
