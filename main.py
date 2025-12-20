@@ -4,6 +4,7 @@ from mem0 import Memory
 import os
 import json
 from datetime import datetime, timedelta
+from typing import Optional, Dict, Any, List
 
 # Set up the Streamlit App
 st.title("AI Customer Support Agent with Memory 🛒")
