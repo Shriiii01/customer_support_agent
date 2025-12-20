@@ -237,6 +237,8 @@ if openai_api_key:
     query = st.chat_input("How can I assist you today?")
 
     if query and validate_customer_id(customer_id):
+        # Sanitize user input
+        query = sanitize_user_input(query)
         # Add user message to chat history
         st.session_state.messages.append({"role": "user", "content": query})
         with st.chat_message("user"):
