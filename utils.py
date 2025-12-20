@@ -48,3 +48,22 @@ def format_timestamp(dt: datetime) -> str:
         Formatted timestamp string
     """
     return dt.strftime("%Y-%m-%d %H:%M:%S")
+
+
+def sanitize_user_input(text: str, max_length: int = 1000) -> str:
+    """
+    Sanitize user input to prevent issues.
+    
+    Args:
+        text: Input text to sanitize
+        max_length: Maximum allowed length
+        
+    Returns:
+        Sanitized text
+    """
+    if not text:
+        return ""
+    text = text.strip()
+    if len(text) > max_length:
+        text = text[:max_length]
+    return text

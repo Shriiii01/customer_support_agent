@@ -7,7 +7,7 @@ import logging
 from datetime import datetime, timedelta
 from typing import Optional, Dict, Any, List
 from config import get_qdrant_config, get_openai_model
-from utils import setup_logging, validate_customer_id, format_timestamp
+from utils import setup_logging, validate_customer_id, format_timestamp, sanitize_user_input
 
 # Set up logging
 setup_logging()
@@ -86,7 +86,7 @@ if openai_api_key:
                 # Generate a response using OpenAI
                 full_prompt = f"{context}\nCustomer: {query}\nSupport Agent:"
                 response = self.client.chat.completions.create(
-                    model=get_openai_model(),
+                    model=self.model,
                     messages=[
                         {"role": "system", "content": "You are a customer support AI agent for TechGadgets.com, an online electronics store."},
                         {"role": "user", "content": full_prompt}
@@ -149,7 +149,7 @@ if openai_api_key:
                 Format the output as a JSON object."""
 
                 response = self.client.chat.completions.create(
-                    model=get_openai_model(),
+                    model=self.model,
                     messages=[
                         {"role": "system", "content": "You are a data generation AI that creates realistic customer profiles and order histories. Always respond with valid JSON."},
                         {"role": "user", "content": prompt}
