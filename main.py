@@ -250,4 +250,11 @@ if openai_api_key:
         st.info("💡 Please enter a customer ID in the sidebar to start chatting with the support agent.")
 
 else:
-    st.warning("Please enter your OpenAI API key to use the customer support agent.")
+    st.warning("🔑 Please enter your OpenAI API key above to use the customer support agent.")
+    st.info("""
+    **Getting Started:**
+    1. Enter your OpenAI API key in the field above
+    2. Enter a customer ID in the sidebar
+    3. Optionally generate synthetic customer data
+    4. Start chatting with the AI support agent!
+    """)
