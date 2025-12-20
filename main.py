@@ -247,7 +247,7 @@ if openai_api_key:
             st.markdown(answer)
 
     elif not customer_id:
-        st.error("Please enter a customer ID to start the chat.")
+        st.info("💡 Please enter a customer ID in the sidebar to start chatting with the support agent.")
 
 else:
     st.warning("Please enter your OpenAI API key to use the customer support agent.")
