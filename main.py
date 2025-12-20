@@ -92,9 +92,11 @@ if openai_api_key:
                 # Add the query and answer to memory
                 self.memory.add(query, user_id=user_id, metadata={"app_id": self.app_id, "role": "user"})
                 self.memory.add(answer, user_id=user_id, metadata={"app_id": self.app_id, "role": "assistant"})
+                logger.info("Query handled successfully and added to memory")
 
                 return answer
             except Exception as e:
+                logger.error(f"Error handling query: {e}", exc_info=True)
                 st.error(f"An error occurred while handling the query: {e}")
                 return "Sorry, I encountered an error. Please try again later."
 
@@ -229,7 +231,7 @@ if openai_api_key:
     # Accept user input
     query = st.chat_input("How can I assist you today?")
 
-    if query and customer_id:
+    if query and validate_customer_id(customer_id):
         # Add user message to chat history
         st.session_state.messages.append({"role": "user", "content": query})
         with st.chat_message("user"):
