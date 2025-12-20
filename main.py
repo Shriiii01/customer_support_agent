@@ -14,6 +14,11 @@ setup_logging()
 logger = logging.getLogger(__name__)
 
 # Set up the Streamlit App
+st.set_page_config(
+    page_title="AI Customer Support Agent",
+    page_icon="🛒",
+    layout="wide"
+)
 st.title("AI Customer Support Agent with Memory 🛒")
 st.caption("Chat with a customer support assistant who remembers your past interactions.")
 
