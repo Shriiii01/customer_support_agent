@@ -53,6 +53,7 @@ if openai_api_key:
 
             self.client = OpenAI()
             self.app_id = "customer-support"
+            self.model = get_openai_model()
 
         def handle_query(self, query: str, user_id: Optional[str] = None) -> str:
             """
@@ -74,9 +75,13 @@ if openai_api_key:
                 # Build context from relevant memories
                 context = "Relevant past information:\n"
                 if relevant_memories and "results" in relevant_memories:
-                    for memory in relevant_memories["results"]:
+                    memory_count = len(relevant_memories["results"])
+                    for idx, memory in enumerate(relevant_memories["results"], 1):
                         if "memory" in memory:
-                            context += f"- {memory['memory']}\n"
+                            context += f"{idx}. {memory['memory']}\n"
+                    logger.debug(f"Built context from {memory_count} memories")
+                else:
+                    context += "No relevant past information found.\n"
 
                 # Generate a response using OpenAI
                 full_prompt = f"{context}\nCustomer: {query}\nSupport Agent:"
