@@ -17,7 +17,19 @@ if openai_api_key:
     os.environ['OPENAI_API_KEY'] = openai_api_key
 
     class CustomerSupportAIAgent:
+        """
+        AI-powered customer support agent with memory capabilities.
+        
+        This agent uses OpenAI's GPT-4 model for generating responses and Mem0
+        with Qdrant for persistent memory storage across conversations.
+        """
         def __init__(self):
+            """
+            Initialize the customer support AI agent with memory and OpenAI client.
+            
+            Sets up Mem0 with Qdrant as the vector store and initializes
+            the OpenAI client for generating responses.
+            """
             # Initialize Mem0 with Qdrant as the vector store
             config = {
                 "vector_store": {
@@ -30,6 +42,9 @@ if openai_api_key:
             }
             try:
                 self.memory = Memory.from_config(config)
+            except ConnectionError as e:
+                st.error(f"Failed to connect to Qdrant vector store: {e}. Please ensure Qdrant is running on localhost:6333")
+                st.stop()
             except Exception as e:
                 st.error(f"Failed to initialize memory: {e}")
                 st.stop()  # Stop execution if memory initialization fails
@@ -37,7 +52,17 @@ if openai_api_key:
             self.client = OpenAI()
             self.app_id = "customer-support"
 
-        def handle_query(self, query, user_id=None):
+        def handle_query(self, query: str, user_id: Optional[str] = None) -> str:
+            """
+            Handle a customer query by searching memory and generating a response.
+            
+            Args:
+                query: The customer's question or request
+                user_id: Optional user ID for personalized memory retrieval
+                
+            Returns:
+                The AI agent's response to the query
+            """
             try:
                 # Search for relevant memories
                 relevant_memories = self.memory.search(query=query, user_id=user_id)
