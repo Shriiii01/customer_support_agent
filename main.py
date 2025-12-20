@@ -5,6 +5,7 @@ import os
 import json
 from datetime import datetime, timedelta
 from typing import Optional, Dict, Any, List
+from config import get_qdrant_config, get_openai_model
 
 # Set up the Streamlit App
 st.title("AI Customer Support Agent with Memory 🛒")
@@ -31,15 +32,7 @@ if openai_api_key:
             the OpenAI client for generating responses.
             """
             # Initialize Mem0 with Qdrant as the vector store
-            config = {
-                "vector_store": {
-                    "provider": "qdrant",
-                    "config": {
-                        "host": "localhost",
-                        "port": 6333,
-                    }
-                },
-            }
+            config = get_qdrant_config()
             try:
                 self.memory = Memory.from_config(config)
             except ConnectionError as e:
@@ -94,7 +87,16 @@ if openai_api_key:
                 st.error(f"An error occurred while handling the query: {e}")
                 return "Sorry, I encountered an error. Please try again later."
 
-        def get_memories(self, user_id=None):
+        def get_memories(self, user_id: Optional[str] = None) -> Optional[Dict[str, Any]]:
+            """
+            Retrieve all memories for a specific user.
+            
+            Args:
+                user_id: Optional user ID to filter memories
+                
+            Returns:
+                Dictionary containing memories or None if retrieval fails
+            """
             try:
                 # Retrieve all memories for a user
                 return self.memory.get_all(user_id=user_id)
@@ -102,7 +104,16 @@ if openai_api_key:
                 st.error(f"Failed to retrieve memories: {e}")
                 return None
 
-        def generate_synthetic_data(self, user_id: str) -> dict | None:
+        def generate_synthetic_data(self, user_id: str) -> Optional[Dict[str, Any]]:
+            """
+            Generate synthetic customer profile and order history data.
+            
+            Args:
+                user_id: The customer ID to generate data for
+                
+            Returns:
+                Dictionary containing generated customer data or None if generation fails
+            """
             try:
                 today = datetime.now()
                 order_date = (today - timedelta(days=10)).strftime("%B %d, %Y")
