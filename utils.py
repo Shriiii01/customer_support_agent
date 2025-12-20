@@ -1,5 +1,8 @@
 """
 Utility functions for the customer support agent.
+
+This module provides common utility functions including logging setup,
+validation, formatting, and input sanitization.
 """
 import logging
 from datetime import datetime

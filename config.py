@@ -1,5 +1,8 @@
 """
 Configuration management for the customer support agent.
+
+This module provides centralized configuration management with support for
+environment variables and sensible defaults.
 """
 import os
 from typing import Dict, Any
