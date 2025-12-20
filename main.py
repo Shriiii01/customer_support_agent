@@ -3,9 +3,15 @@ from openai import OpenAI
 from mem0 import Memory
 import os
 import json
+import logging
 from datetime import datetime, timedelta
 from typing import Optional, Dict, Any, List
 from config import get_qdrant_config, get_openai_model
+from utils import setup_logging, validate_customer_id, format_timestamp
+
+# Set up logging
+setup_logging()
+logger = logging.getLogger(__name__)
 
 # Set up the Streamlit App
 st.title("AI Customer Support Agent with Memory 🛒")
@@ -35,10 +41,13 @@ if openai_api_key:
             config = get_qdrant_config()
             try:
                 self.memory = Memory.from_config(config)
+                logger.info("Memory system initialized successfully")
             except ConnectionError as e:
+                logger.error(f"Failed to connect to Qdrant vector store: {e}")
                 st.error(f"Failed to connect to Qdrant vector store: {e}. Please ensure Qdrant is running on localhost:6333")
                 st.stop()
             except Exception as e:
+                logger.error(f"Failed to initialize memory: {e}")
                 st.error(f"Failed to initialize memory: {e}")
                 st.stop()  # Stop execution if memory initialization fails
 
@@ -57,8 +66,10 @@ if openai_api_key:
                 The AI agent's response to the query
             """
             try:
+                logger.info(f"Handling query for user {user_id}: {query[:50]}...")
                 # Search for relevant memories
                 relevant_memories = self.memory.search(query=query, user_id=user_id)
+                logger.debug(f"Found {len(relevant_memories.get('results', []))} relevant memories")
                 
                 # Build context from relevant memories
                 context = "Relevant past information:\n"
@@ -70,7 +81,7 @@ if openai_api_key:
                 # Generate a response using OpenAI
                 full_prompt = f"{context}\nCustomer: {query}\nSupport Agent:"
                 response = self.client.chat.completions.create(
-                    model="gpt-4",
+                    model=get_openai_model(),
                     messages=[
                         {"role": "system", "content": "You are a customer support AI agent for TechGadgets.com, an online electronics store."},
                         {"role": "user", "content": full_prompt}
@@ -131,7 +142,7 @@ if openai_api_key:
                 Format the output as a JSON object."""
 
                 response = self.client.chat.completions.create(
-                    model="gpt-4",
+                    model=get_openai_model(),
                     messages=[
                         {"role": "system", "content": "You are a data generation AI that creates realistic customer profiles and order histories. Always respond with valid JSON."},
                         {"role": "user", "content": prompt}
