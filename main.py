@@ -7,7 +7,7 @@ import logging
 from datetime import datetime, timedelta
 from typing import Optional, Dict, Any, List
 from config import get_qdrant_config, get_openai_model
-from utils import setup_logging, validate_customer_id, format_timestamp, sanitize_user_input
+from utils import setup_logging, validate_customer_id, format_timestamp, sanitize_user_input, get_memory_count
 
 # Set up logging
 setup_logging()
