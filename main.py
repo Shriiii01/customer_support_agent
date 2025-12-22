@@ -262,7 +262,7 @@ if openai_api_key:
             st.markdown(query)
 
         # Generate and display response
-        with st.spinner("Generating response..."):
+        with st.spinner("🤔 Thinking..."):
             answer = support_agent.handle_query(query, user_id=customer_id)
 
         # Add assistant response to chat history
