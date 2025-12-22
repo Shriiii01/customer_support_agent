@@ -6,7 +6,7 @@ import json
 import logging
 from datetime import datetime, timedelta
 from typing import Optional, Dict, Any, List
-from config import get_qdrant_config, get_openai_model
+from config import get_qdrant_config, get_openai_model, get_temperature, get_max_tokens
 from utils import setup_logging, validate_customer_id, format_timestamp, sanitize_user_input, get_memory_count
 
 # Set up logging
@@ -200,8 +200,10 @@ if openai_api_key:
         st.session_state.previous_customer_id = customer_id
         st.session_state.customer_data = None
 
+    st.sidebar.markdown("---")
+    st.sidebar.subheader("📊 Data Management")
     # Add button to generate synthetic data
-    if st.sidebar.button("Generate Synthetic Data"):
+    if st.sidebar.button("🔄 Generate Synthetic Data", use_container_width=True):
         if customer_id:
             with st.spinner("Generating customer data..."):
                 st.session_state.customer_data = support_agent.generate_synthetic_data(customer_id)
@@ -212,13 +214,14 @@ if openai_api_key:
         else:
             st.sidebar.error("Please enter a customer ID first.")
 
-    if st.sidebar.button("View Customer Profile"):
+    if st.sidebar.button("👁️ View Customer Profile", use_container_width=True):
         if st.session_state.customer_data:
             st.sidebar.json(st.session_state.customer_data)
         else:
             st.sidebar.info("No customer data generated yet. Click 'Generate Synthetic Data' first.")
 
-    if st.sidebar.button("View Memory Info"):
+    st.sidebar.markdown("---")
+    if st.sidebar.button("🧠 View Memory Info", use_container_width=True):
         if customer_id:
             memories = support_agent.get_memories(user_id=customer_id)
             if memories:
