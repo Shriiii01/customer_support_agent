@@ -189,9 +189,11 @@ if openai_api_key:
     support_agent = CustomerSupportAIAgent()
 
     # Sidebar for customer ID and memory view
-    st.sidebar.title("Enter your Customer ID:")
+    st.sidebar.title("👤 Customer Management")
+    st.sidebar.markdown("---")
+    st.sidebar.subheader("Enter your Customer ID:")
     previous_customer_id = st.session_state.get("previous_customer_id", None)
-    customer_id = st.sidebar.text_input("Enter your Customer ID")
+    customer_id = st.sidebar.text_input("Customer ID", placeholder="e.g., CUST-12345", key="customer_id_input")
 
     if customer_id != previous_customer_id:
         st.session_state.messages = []
