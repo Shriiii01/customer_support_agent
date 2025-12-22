@@ -64,7 +64,10 @@ customer_support_agent/
 ├── config.py         # Configuration management
 ├── utils.py          # Utility functions
 ├── requirements.txt  # Python dependencies
-└── README.md         # This file
+├── README.md         # This file
+├── CHANGELOG.md      # Project changelog
+├── EXAMPLES.md       # Usage examples
+└── LICENSE           # MIT License
 ```
 
 ## Contributing
