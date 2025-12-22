@@ -93,13 +93,21 @@ if openai_api_key:
 
                 # Generate a response using OpenAI
                 full_prompt = f"{context}\nCustomer: {query}\nSupport Agent:"
+                system_message = (
+                    "You are a helpful and professional customer support AI agent for TechGadgets.com, "
+                    "an online electronics store. Be friendly, empathetic, and solution-oriented. "
+                    "Use the provided context from past interactions to provide personalized assistance."
+                )
                 response = self.client.chat.completions.create(
                     model=self.model,
                     messages=[
-                        {"role": "system", "content": "You are a customer support AI agent for TechGadgets.com, an online electronics store."},
+                        {"role": "system", "content": system_message},
                         {"role": "user", "content": full_prompt}
-                    ]
+                    ],
+                    temperature=self.temperature,
+                    max_tokens=self.max_tokens
                 )
+                logger.debug(f"Generated response with {len(response.choices[0].message.content)} characters")
                 answer = response.choices[0].message.content
 
                 # Add the query and answer to memory
