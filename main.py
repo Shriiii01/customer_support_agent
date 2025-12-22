@@ -59,6 +59,8 @@ if openai_api_key:
             self.client = OpenAI()
             self.app_id = "customer-support"
             self.model = get_openai_model()
+            self.temperature = get_temperature()
+            self.max_tokens = get_max_tokens()
 
         def handle_query(self, query: str, user_id: Optional[str] = None) -> str:
             """
