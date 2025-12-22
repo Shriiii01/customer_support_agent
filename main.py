@@ -240,6 +240,10 @@ if openai_api_key:
     # Initialize the chat history
     if "messages" not in st.session_state:
         st.session_state.messages = []
+    
+    # Display welcome message for new conversations
+    if len(st.session_state.messages) == 0 and customer_id:
+        st.info("👋 Welcome! I'm your AI customer support agent. How can I help you today?")
 
     # Display the chat history
     for message in st.session_state.messages:
