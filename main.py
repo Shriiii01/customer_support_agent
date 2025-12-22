@@ -7,7 +7,7 @@ import logging
 from datetime import datetime, timedelta
 from typing import Optional, Dict, Any, List
 from config import get_qdrant_config, get_openai_model, get_temperature, get_max_tokens
-from utils import setup_logging, validate_customer_id, format_timestamp, sanitize_user_input, get_memory_count
+from utils import setup_logging, validate_customer_id, format_timestamp, sanitize_user_input, get_memory_count, get_memory_count
 
 # Set up logging
 setup_logging()
@@ -83,7 +83,7 @@ if openai_api_key:
                 # Build context from relevant memories
                 context = "Relevant past information:\n"
                 if relevant_memories and "results" in relevant_memories:
-                    memory_count = len(relevant_memories["results"])
+                    memory_count = get_memory_count(relevant_memories)
                     for idx, memory in enumerate(relevant_memories["results"], 1):
                         if "memory" in memory:
                             context += f"{idx}. {memory['memory']}\n"
