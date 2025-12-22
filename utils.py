@@ -86,3 +86,19 @@ def get_memory_count(memories: Optional[Dict[str, Any]]) -> int:
     if not memories or "results" not in memories:
         return 0
     return len(memories["results"])
+
+
+def truncate_text(text: str, max_length: int = 100) -> str:
+    """
+    Truncate text to a maximum length with ellipsis.
+    
+    Args:
+        text: Text to truncate
+        max_length: Maximum length
+        
+    Returns:
+        Truncated text with ellipsis if needed
+    """
+    if len(text) <= max_length:
+        return text
+    return text[:max_length - 3] + "..."
