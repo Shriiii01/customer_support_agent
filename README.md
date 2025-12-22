@@ -52,6 +52,8 @@ You can configure the application using environment variables:
 - `QDRANT_HOST`: Qdrant host (default: localhost)
 - `QDRANT_PORT`: Qdrant port (default: 6333)
 - `OPENAI_MODEL`: OpenAI model to use (default: gpt-4)
+- `OPENAI_TEMPERATURE`: Temperature for response generation (default: 0.7)
+- `OPENAI_MAX_TOKENS`: Maximum tokens for responses (default: 500)
 - `OPENAI_API_KEY`: Your OpenAI API key (can also be entered in the app)
 
 ## Project Structure

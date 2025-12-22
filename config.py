@@ -34,3 +34,23 @@ def get_openai_model() -> str:
         Model name string
     """
     return os.getenv("OPENAI_MODEL", "gpt-4")
+
+
+def get_temperature() -> float:
+    """
+    Get temperature setting for OpenAI API from environment variable or default.
+    
+    Returns:
+        Temperature value (0.0 to 2.0)
+    """
+    return float(os.getenv("OPENAI_TEMPERATURE", "0.7"))
+
+
+def get_max_tokens() -> int:
+    """
+    Get max tokens setting for OpenAI API from environment variable or default.
+    
+    Returns:
+        Maximum number of tokens
+    """
+    return int(os.getenv("OPENAI_MAX_TOKENS", "500"))

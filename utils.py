@@ -69,4 +69,20 @@ def sanitize_user_input(text: str, max_length: int = 1000) -> str:
     text = text.strip()
     if len(text) > max_length:
         text = text[:max_length]
+        logging.warning(f"Input truncated from {len(text)} to {max_length} characters")
     return text
+
+
+def get_memory_count(memories: Optional[Dict[str, Any]]) -> int:
+    """
+    Get the count of memories from memory results.
+    
+    Args:
+        memories: Memory results dictionary
+        
+    Returns:
+        Number of memories found
+    """
+    if not memories or "results" not in memories:
+        return 0
+    return len(memories["results"])
