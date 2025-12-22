@@ -74,7 +74,8 @@ if openai_api_key:
                 The AI agent's response to the query
             """
             try:
-                logger.info(f"Handling query for user {user_id}: {query[:50]}...")
+                from utils import truncate_text
+                logger.info(f"Handling query for user {user_id}: {truncate_text(query, 50)}")
                 # Search for relevant memories
                 relevant_memories = self.memory.search(query=query, user_id=user_id)
                 memory_count = get_memory_count(relevant_memories)
