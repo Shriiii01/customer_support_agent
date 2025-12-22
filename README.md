@@ -74,6 +74,8 @@ customer_support_agent/
 
 Contributions are welcome! Please feel free to submit a Pull Request.
 
+See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed contribution guidelines.
+
 ## License
 
 MIT License - see LICENSE file for details

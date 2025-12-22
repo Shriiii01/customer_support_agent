@@ -7,7 +7,7 @@ import logging
 from datetime import datetime, timedelta
 from typing import Optional, Dict, Any, List
 from config import get_qdrant_config, get_openai_model, get_temperature, get_max_tokens
-from utils import setup_logging, validate_customer_id, format_timestamp, sanitize_user_input, get_memory_count, get_memory_count
+from utils import setup_logging, validate_customer_id, format_timestamp, sanitize_user_input, get_memory_count, truncate_text, get_memory_count
 
 # Set up logging
 setup_logging()
@@ -74,7 +74,6 @@ if openai_api_key:
                 The AI agent's response to the query
             """
             try:
-                from utils import truncate_text
                 logger.info(f"Handling query for user {user_id}: {truncate_text(query, 50)}")
                 # Search for relevant memories
                 relevant_memories = self.memory.search(query=query, user_id=user_id)
