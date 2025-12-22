@@ -75,7 +75,8 @@ if openai_api_key:
                 logger.info(f"Handling query for user {user_id}: {query[:50]}...")
                 # Search for relevant memories
                 relevant_memories = self.memory.search(query=query, user_id=user_id)
-                logger.debug(f"Found {len(relevant_memories.get('results', []))} relevant memories")
+                memory_count = get_memory_count(relevant_memories)
+                logger.debug(f"Found {memory_count} relevant memories")
                 
                 # Build context from relevant memories
                 context = "Relevant past information:\n"
